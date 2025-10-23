@@ -3,23 +3,41 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import time
 import re
 import pandas as pd
 
 
+# def get_driver(headless=True):
+#     options = Options()
+#     if headless:
+#         options.add_argument("--headless=new")
+#     options.add_argument("--disable-gpu")
+#     options.add_argument("--no-sandbox")
+#     options.add_argument("--window-size=1280x800")
+#     options.add_argument("--disable-dev-shm-usage")
+
+#     service = Service(ChromeDriverManager().install())
+#     return webdriver.Chrome(service=service, options=options)
+
 def get_driver(headless=True):
     options = Options()
+
+    # Use Chromium path installed by Render
+    options.binary_location = "/usr/bin/chromium-browser"
+
     if headless:
         options.add_argument("--headless=new")
+
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
     options.add_argument("--window-size=1280x800")
     options.add_argument("--disable-dev-shm-usage")
 
-    service = Service(ChromeDriverManager().install())
+    # Path to the ChromeDriver installed via apt.txt
+    service = Service("/usr/bin/chromedriver")
     return webdriver.Chrome(service=service, options=options)
 
 
